@@ -13,5 +13,10 @@ export const ROUTES: Route[] = [
     path: 'project',
     canActivate: [AuthGuard],
     loadChildren: 'app/modules/project/project.module#ProjectModule'
+  },
+  {
+    path: 'complex',
+    canActivate: [AuthGuard],
+    loadChildren: 'app/modules/complex/complex.module#ComplexModule'
   }
 ];

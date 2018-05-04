@@ -53,6 +53,7 @@ namespace BIMManager
             // Register services
             services.AddScoped<JwtService>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IComplexRepository, ComplexRepository>();
             services.AddScoped<IBimModelRepository, BIMModelRepository>();
             services.AddScoped<IEntityRepository, EntityRepository>();
 

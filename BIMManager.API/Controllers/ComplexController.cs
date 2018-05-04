@@ -1,41 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using System.Threading.Tasks;
+using BIMManager.API.Helpers;
 using BIMManager.Data.Abstract;
 using BIMManager.Models.Entities;
 using BIMManager.Models.ViewModels;
-using BIMManager.API.Helpers;
-using Microsoft.AspNetCore.Authorization;
-using System.Reflection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BIMManager.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/project")]
-    [Authorize]
-    public class ProjectController : Controller
+    [Route("api/complex")]
+    public class ComplexController : Controller
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly IComplexRepository _complexRepository;
 
-        public ProjectController(IProjectRepository projectRepository)
-        {
-            _projectRepository = projectRepository;
+        public ComplexController(IComplexRepository complexRepository) {
+            _complexRepository = complexRepository;
         }
 
         [HttpGet]
-        [Route("")]
         public IActionResult GetAll([FromQuery] string search, [FromQuery] int? limit = 10, [FromQuery] int? skip = 0)
         {
-            int totalCount = _projectRepository.Count();
+            int totalCount = _complexRepository.Count();
 
             if (!String.IsNullOrEmpty(search))
             {
 
-                return Ok(new ApiResponse<List<Project>>
+                return Ok(new ApiResponse<List<Complex>>
                 {
                     Meta = new ApiResponseMetadata { Total = totalCount },
-                    Result = _projectRepository.GetAll().Where(project => {
+                    Result = _complexRepository.GetAll().Where(project => {
 
                         Type type = project.GetType();
                         bool condition = false;
@@ -53,29 +51,34 @@ namespace BIMManager.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<List<Project>>
+            return Ok(new ApiResponse<List<Complex>>
             {
                 Meta = new ApiResponseMetadata { Total = totalCount },
-                Result = _projectRepository.GetAll().Skip((int)skip).Take((int)limit).ToList()
+                Result = _complexRepository.GetAll().Skip((int)skip).Take((int)limit).ToList()
             });
         }
 
         [HttpPost]
         [Route("")]
-        public IActionResult CreateProject([FromBody] ProjectCreateViewModel projectCreateViewModel)
+        public IActionResult CreateComplex([FromBody] ComplexCreateViewModel complexCreateViewModel)
         {
-            try {
-                Project project = new Project(projectCreateViewModel);
-                _projectRepository.Add(project);
-                _projectRepository.Commit();
+            try
+            {
+                Complex complex = new Complex(complexCreateViewModel);
+                _complexRepository.Add(complex);
+                _complexRepository.Commit();
 
-                return Ok(new {
+                return Ok(new
+                {
                     Status = true,
-                    Result = project
+                    Result = complex
                 });
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
 
-                return BadRequest(new {
+                return BadRequest(new
+                {
                     Status = false,
                     Message = e.Message
                 });

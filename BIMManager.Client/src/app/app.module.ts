@@ -13,6 +13,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { SharedModule } from './modules/shared/shared.module';
 import { AuthGuard } from './guards/auth.guard';
 import { PublicGuard } from './guards/public.guard';
+import { ComplexService } from './services/complex.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PublicGuard } from './guards/public.guard';
     AuthService,
     ApiService,
     ProjectService,
+    ComplexService,
     AuthGuard,
     PublicGuard,
     AuthenticationService
