@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { IAuthResponse } from '../../models/authentication.model';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
 
   email = '';
   password = '';
+  errors: {};
 
   constructor(private authenticationService: AuthenticationService,
               private authService: AuthService,
@@ -23,6 +25,7 @@ export class LoginComponent {
 
   login(): void {
 
+    this.errors = undefined;
     this.authenticationService.login({
       email: this.email,
       password: this.password
@@ -32,6 +35,8 @@ export class LoginComponent {
         this.authService.setToken(response.token);
         this.apiService.setToken();
         this.router.navigate(['/project']);
+      }, (err: HttpErrorResponse) => {
+        this.errors = err.error;
       });
   }
 }

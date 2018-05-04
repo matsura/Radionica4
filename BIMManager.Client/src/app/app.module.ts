@@ -11,6 +11,8 @@ import { ApiService } from './services/api.service';
 import { ProjectService } from './services/project.service';
 import { AuthenticationService } from './services/authentication.service';
 import { SharedModule } from './modules/shared/shared.module';
+import { AuthGuard } from './guards/auth.guard';
+import { PublicGuard } from './guards/public.guard';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { SharedModule } from './modules/shared/shared.module';
     AuthService,
     ApiService,
     ProjectService,
+    AuthGuard,
+    PublicGuard,
     AuthenticationService
   ],
   bootstrap: [AppComponent]

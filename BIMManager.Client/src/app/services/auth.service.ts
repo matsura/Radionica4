@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/of';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AuthService {
    *
    * @type {EventEmitter<boolean>}
    */
-  authStatus: Subject<boolean> = new Subject<boolean>();
+  authStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

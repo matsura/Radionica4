@@ -7,6 +7,7 @@ using BIMManager.Models.Entities;
 using BIMManager.Models.ViewModels;
 using BIMManager.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
 
 namespace BIMManager.API.Controllers
 {
@@ -28,6 +29,30 @@ namespace BIMManager.API.Controllers
         {
             int totalCount = _projectRepository.Count();
 
+            if (!String.IsNullOrEmpty(search))
+            {
+
+                return Ok(new ApiResponse<List<Project>>
+                {
+                    Meta = new ApiResponseMetadata { Total = totalCount },
+                    Result = _projectRepository.GetAll().Where(project => {
+
+                        Type type = project.GetType();
+                        bool condition = false;
+                        List<PropertyInfo> props = type.GetProperties().ToList();
+                        foreach (PropertyInfo prop in props)
+                        {
+                            condition = condition || (Convert.ToString(prop.GetValue(project)).ToLower()).Contains(search.ToLower());
+                            if (condition)
+                            {
+                                break;
+                            }
+                        }
+                        return condition;
+                    }).ToList()
+                });
+            }
+
             if (limit == null && skip == null) {
                 return Ok(new ApiResponse<List<Project>> {
                     Meta = new ApiResponseMetadata { Total = totalCount },
@@ -42,10 +67,11 @@ namespace BIMManager.API.Controllers
                 });
             } else {
 
+                var result = _projectRepository.GetAll().Skip((int)skip).Take((int)limit).ToList();
                 return Ok(new ApiResponse<List<Project>>
                 {
                     Meta = new ApiResponseMetadata { Total = totalCount },
-                    Result = _projectRepository.GetAll().Take((int)limit).Skip((int)skip).ToList()
+                    Result = _projectRepository.GetAll().Skip((int)skip).Take((int)limit).ToList()
                 });
             }
         }

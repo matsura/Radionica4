@@ -9,27 +9,16 @@ export class ProjectService {
 
   constructor(private apiService: ApiService) {}
 
-  getAll(limit?: number, skip?: number): Observable<IServerResponse<Array<IProject>>> {
+  getAll(limit?: number, skip?: number, search?: string): Observable<{}> {
 
-    if (limit && skip) {
-      return this.apiService.get('project', {
-        limit,
-        skip
-      });
-    } else if (limit && !skip) {
-      return this.apiService.get('project', {
-        limit
-      });
-    } else if (!limit && skip) {
-      return this.apiService.get('project', {
-        skip
-      });
-    }
-
-    return this.apiService.get('project');
+    return this.apiService.get('project', {
+      limit,
+      skip,
+      search
+    });
   }
 
-  create(project: IProject): Observable<IServerResponse<IProject>> {
+  create(project: IProject): Observable<{}> {
 
     return this.apiService.post('project', JSON.stringify(project));
   }

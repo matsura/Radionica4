@@ -110,7 +110,11 @@ export class ApiService {
     let httpParams: HttpParams = new HttpParams();
     if (params) {
       Object.keys(params)
-        .forEach((paramName: string) => httpParams = httpParams.append(paramName, params[paramName]));
+        .forEach((paramName: string) => {
+          if (params[paramName]) {
+            httpParams = httpParams.append(paramName, params[paramName]);
+          }
+        });
     }
     return httpParams;
   }
