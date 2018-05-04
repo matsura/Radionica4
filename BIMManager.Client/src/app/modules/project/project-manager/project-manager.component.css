@@ -7,3 +7,6 @@ form {
 .panel {
   min-height: 800px;
 }
+.table-container {
+  min-height: 450px;
+}
