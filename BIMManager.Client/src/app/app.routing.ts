@@ -7,4 +7,8 @@ export const ROUTES: Route[] = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'project',
+    loadChildren: 'app/modules/project/project.module#ProjectModule'
+  }
 ];

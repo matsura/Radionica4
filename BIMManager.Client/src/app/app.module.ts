@@ -6,6 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routing';
 import { AuthenticationModule } from './modules/authentication.module';
+import { AuthService } from './services/auth.service';
+import { ApiService } from './services/api.service';
+import { ProjectService } from './services/project.service';
+import { AuthenticationService } from './services/authentication.service';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,9 +20,15 @@ import { AuthenticationModule } from './modules/authentication.module';
     BrowserModule,
     AuthenticationModule,
     HttpClientModule,
+    SharedModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    ApiService,
+    ProjectService,
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
