@@ -14,7 +14,7 @@
                 <a class="btn btn-success pull-right" (click)="onCreateProject()"><span class="glyphicon glyphicon-plus"></span> New project</a>
               </div>
               <div class="alert alert-info" *ngIf="!projects.length">
-                No projects have been created yet.
+                {{searchForm?.value?.search !== '' ? 'No results' : 'No projects have been created yet.'}}
               </div>
               <div class="table-container">
                 <table class="table table-responsive table-bordered table-striped" *ngIf="projects.length">

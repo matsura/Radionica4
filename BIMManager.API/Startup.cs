@@ -54,7 +54,6 @@ namespace BIMManager
             services.AddScoped<JwtService>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IBimModelRepository, BIMModelRepository>();
-            services.AddScoped<IComplexRepository, ComplexRepository>();
             services.AddScoped<IEntityRepository, EntityRepository>();
 
             // CORS
